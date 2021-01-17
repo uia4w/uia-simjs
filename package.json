@@ -1,0 +1,45 @@
+{
+    "name": "simjs",
+    "version": "0.1.0",
+    "description": "DESim for JS",
+    "keywords": [
+        "sim",
+        "DESim"
+    ],
+    "homepage": "https://github.com/uia4w/uia-simjs",
+    "license": "Apache 2.0",
+    "author": {
+        "name": "Kyle K. Lin",
+        "url": "https://github.com/uia4j"
+    },
+    "main": "dist/simjs.js",
+    "unpkg": "dist/simjs.min.js",
+    "jsdelivr": "dist/simjs.min.js",
+    "module": "src/main.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/uia4w/uia-simjs"
+    },
+    "files": [
+        "dist/**/*.js",
+        "src/**/*.js"
+    ],
+    "scripts": {
+        "pretest": "rollup -c",
+        "test": "tape test/**/*-test.js",
+        "eslint": "eslint src"
+    },
+    "sideEffects": false,
+    "devDependencies": {
+        "@rollup/plugin-node-resolve": "^11.1.0",
+        "eslint": "^6.8.0",
+        "jsdom": "15",
+        "rollup": "1",
+        "rollup-plugin-node-builtins": "^2.1.2",
+        "rollup-plugin-terser": "5",
+        "tape": "4"
+    },
+    "dependencies": {
+        "tinyqueue": "^2.0.3"
+    }
+}

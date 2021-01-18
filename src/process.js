@@ -1,22 +1,32 @@
-import { default as Env, Priority } from "./env"
+/**
+ * @module Process
+ *
+ * @author Kyle K. Lin 
+ */
+
+import { Priority } from "./constants"
 import Event from "./event"
 import Interruption from "./interruption"
 
 /**
- * The process main object.
+ * The process event.
+ * 
+ * @constructor
+ * @class
+ * @extends Event
  * 
  * @param {Env} env The environment.
  * @param {string} id The process id. 
- * @param {GeneratorFunction} genFunc The generator. 
+ * @param {GeneratorFunction} genFunc The generator function. 
  */
 function Process(env, id, genFunc) {
     Event.apply(this, [ env, id ]);
     this._gen = genFunc();
-    this._target = undefined;
+    this._target = undefined; 
     this._resumeCallback = this.resume.bind(this);
  
     // schedule an init event to startup this process.
-    let initEvent = new Event(env, "initialize");
+    let initEvent = new Event(env, "Init");
     this.bind(initEvent);
     env.schedule(initEvent, 0, Priority.URGENT);
 }
@@ -24,7 +34,7 @@ function Process(env, id, genFunc) {
 Process.prototype = new Event();
 
 /**
- * Interrupts the process.
+ * Interrupts this process.
  * 
  * @param {Error} cause The cause.
  */
@@ -33,7 +43,7 @@ Process.prototype.interrupt = function(cause) {
 }
 
 /**
- * Binds the specific  event with the process.
+ * Binds the specific event with this process.
  * 
  * @param {Event} event The event.
  */
@@ -42,7 +52,7 @@ Process.prototype.bind = function(event) {
 }
 
 /**
- * Unbinds the specific event with the process.
+ * Unbinds the specific event with this process.
  * 
  * @param {Event} event The event.
  */
@@ -51,7 +61,7 @@ Process.prototype.unbind = function(event) {
 }
 
 /**
- * Resumes to execute the next ONE event which the state is 'waiting'.
+ * Resumes to execute the next __ONE__ event which the state is __'NOT PROCESS'__.
  * 
  * @param {Event} by The event resumes the process.
  */
@@ -59,6 +69,7 @@ Process.prototype.resume = function(by) {
     this.env().activeProcess(this);
     
     let event = by;
+    // result from yield
     let result = {
         done: false,
         value: undefined
@@ -66,9 +77,14 @@ Process.prototype.resume = function(by) {
     while(!result.done) {
         if(!event.isOk()) {
             event.defused();
-            result = event.failed(event.value());
-        }
-        else {
+            if(event.value() === undefined) {
+                result = this._gen.throw(new Error("internal interrupt"));
+            } else if(typeof event.value() === Error) {
+                result = this._gen.throw(event.value());
+            } else {
+                result = this._gen.throw(new Error(event.value()));
+            } 
+        } else {
             result = this._gen.next(event.value());
         }
 

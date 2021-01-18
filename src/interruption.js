@@ -1,12 +1,21 @@
-import Event from "./event"
-import Process from "./process";
+/**
+ * @module Interruption
+ *
+ * @author Kyle K. Lin 
+ */
+
+ import Event from "./event"
 
 /**
- * Immediately schedules an Interruption event with the given cause to be thrown into the process.
+ * An interruption event which is scheduled immediately with a cause.
  * 
- *  This event is automatically triggered when it is created.
+ * This event is automatically triggered when it is created.
  * 
- * @param {Process} process The process will be interrupted.
+ * @constructor
+ * @class
+ * @extends Event
+ * 
+ * @param {Process} process A process this event interrupts.
  * @param {Error} cause The cause.
  */
 function Interruption(process, cause) {
@@ -16,11 +25,11 @@ function Interruption(process, cause) {
     this._value = cause;
     this.ng();
     this.defused();
-    this.addCallback(function(event) {
+    this.addCallback(function() {
         _process.unbind(_process._target);
         _process.resume(this);
     });
-    env.schedule(this, delay);
+    process.env().schedule(this);
 }
 
 Interruption.prototype = new Event();

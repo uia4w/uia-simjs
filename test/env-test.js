@@ -1,8 +1,8 @@
 var tape = require("tape"),
-    simjs = require("../");
+desim = require("../");
 
 tape("Env simple", function(test) {
-    var env = new simjs.Env(); 
+    var env = new desim.Env(); 
     env.process("p1", function *() {
         yield env.timeout("p1t1", 10);
         test.equal(env.now(), 10);
@@ -20,7 +20,7 @@ tape("Env simple", function(test) {
 });
       
 tape("Env with until", function(test) {
-    var env = new simjs.Env(); 
+    var env = new desim.Env(); 
     env.process("p1", function *() {
         yield env.timeout("t10", 10);
         test.equal(env.now(), 10);
@@ -32,7 +32,7 @@ tape("Env with until", function(test) {
 });
 
 tape("Env school", function(test) {
-    var env = new simjs.Env(); 
+    var env = new desim.Env(); 
     var bell = env.event("bell");
     env.process("john", function *() {
         while(true) {

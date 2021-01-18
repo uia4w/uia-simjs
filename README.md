@@ -1,13 +1,13 @@
-UIA-SIM for JavaScript, DESimJS
+UIA-SIM for JavaScript, DESim4JS
 ===
 
-DESimJS is a JavaScript port of SimPy, process-based discrete event simulation framework.
+DESim4JS is a JavaScript port of SimPy, process-based discrete event simulation framework.
 
-DESimJS aims to port the concepts used in SimPy to the JavaScript world.
+DESim4JS aims to port the concepts used in SimPy to the JavaScript world.
 
 A simple example:
 ```js
-var env = new simjs.Env(); 
+var env = new desim.Env(); 
 var bell = env.event("bell");
 env.process("John", function *() {
     while(true) {

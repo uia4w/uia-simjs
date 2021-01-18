@@ -1,16 +1,23 @@
+/**
+ * @module Env
+ *
+ * @author Kyle K. Lin 
+ */
+
 import TinyQueue from "tinyqueue"
 import Event from "./event"
 import Process from "./process"
 import Timeout from "./timeout"
+import { Priority } from "./constants"
 
-export const Priority = Object.freeze({
-    URGENT: 0,
-    HIGH: 1,
-    NORMAL: 2,
-    LOW: 3
-});
-
-export default function Env() {
+/**
+ * The discrete event simulation environment.
+ * 
+ * @constructor
+ * @class
+ * 
+ */
+function Env() {
     const _queue = new TinyQueue([], function(j1, j2) {
         var c = j1.time - j2.time;
         if(c != 0) {
@@ -23,44 +30,55 @@ export default function Env() {
     this.queue = function() { return _queue };
 }
 
+/**
+ * Returns current time.
+ * 
+ * @returns The current time.
+ */
 Env.prototype.now = function() {
     return this._now;
 }
 
+/**
+ * Sets the active process.
+ * 
+ * @param {Process} process The process.
+ */
 Env.prototype.activeProcess = function(process) {
     this._activeProcess = process;
 }
 
 /**
+ * Runs the environment.
  * 
  * @param {number} until The end time.
  */
 Env.prototype.run = function(until = 0) {
     console.log("=== start ===");
     try {
-        if(until <= 0) {
-            while(this.queue().length !== 0) {
-                this.step();
-            }
-        } else {
+        if(until > 0) {
             let stopEvent = new Event(this, "StopSim");
-            stopEvent.addCallback(function(event) {
+            stopEvent.addCallback(function() {
                 throw new Error("time up interruption");
             });
             this.schedule(stopEvent, until, this._now);
-
-            while(this._now < until && this.queue().length !== 0) {
-                this.step();
-            }
         }
+
+        while(this.queue().length !== 0 && (until <= 0 || this._now < until)) {
+            this.step();
+        }
+
         console.log("=== end ===");
     } catch(err) {
         console.log(err.message);
         console.log("=== end with exception ===");
-    } finally {
     }
 }
 
+/**
+ * Executes the first event in the queue.
+ * 
+ */
 Env.prototype.step = function() {
     // 1. get the first job.
     var job = this.queue().pop();
@@ -75,7 +93,7 @@ Env.prototype.step = function() {
 }
 
 /**
- * Schedules a event in the queue.
+ * __Schedules__ an event in the queue.
  * 
  * @param {Event} event The event.
  * @param {number} delay The delay time.
@@ -97,7 +115,7 @@ Env.prototype.event = function(id, value = undefined) {
 }
 
 /**
- * Creates a scheduled timeout event.
+ * Creates a __scheduled__ timeout event.
  * 
  * @param {string} id The event id.
  * @param {number} delay The delay time.
@@ -109,7 +127,7 @@ Env.prototype.timeout = function(id, delay = 0, value = null) {
 }
 
 /**
- * Creates a scheduled timeout event.
+ * Creates a __scheduled__ timeout event.
  * 
  * @param {string} id The event id.
  * @param {Generator} gen The generator.
@@ -136,3 +154,4 @@ function job(event, time, priority = Priority.NORMAL) {
     });
 }
 
+export default Env;

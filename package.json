@@ -26,19 +26,24 @@
     ],
     "scripts": {
         "pretest": "rollup -c",
+        "test": "tape test/**/*-test.js | tap-spec",
         "pretest1": "rollup -c",
-        "test": "tape test/**/*-test.js",
         "test1": "tape --",
+        "coverage": "nyc npm run test",
+        "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov --disable=gcov -t 4aeda1fa-e670-401e-a069-fc00ee197edc",
         "eslint": "eslint src"
     },
     "sideEffects": false,
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^11.1.0",
+        "codecov": "^3.8.1",
         "eslint": "^6.8.0",
         "jsdom": "15",
+        "nyc": "^15.1.0",
         "rollup": "1",
         "rollup-plugin-node-builtins": "^2.1.2",
         "rollup-plugin-terser": "5",
+        "tap-spec": "^5.0.0",
         "tape": "4"
     },
     "dependencies": {

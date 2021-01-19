@@ -10,15 +10,15 @@
         "sim",
         "DESim"
     ],
-    "homepage": "https://github.com/uia4w/uia-desim",
+    "homepage": "https://github.com/uia4w/uia-simjs",
     "license": "Apache-2.0",
     "author": {
         "name": "Kyle K. Lin",
-        "url": "https://github.com/uia4j"
+        "url": "https://github.com/uia4w"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/uia4w/uia-desim"
+        "url": "https://github.com/uia4w/uia-simjs"
     },
     "files": [
         "dist/**/*.js",

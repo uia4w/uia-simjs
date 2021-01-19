@@ -172,7 +172,7 @@ Event.prototype.callback = function() {
         return;
     }
     try {
-        while(this._callbacks.length != 0) {
+        while(this._callbacks.length !== 0) {
             this._callbacks.shift()(this);
         }
     } finally {

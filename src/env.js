@@ -20,7 +20,7 @@ import { Priority } from "./constants"
 function Env() {
     const _queue = new TinyQueue([], function(j1, j2) {
         var c = j1.time - j2.time;
-        if(c != 0) {
+        if(c !== 0) {
             return c;
         }
         return j1.priority - j2.priority;

@@ -1,5 +1,5 @@
 var tape = require("tape"),
-desim = require("../");
+    desim = require("../");
 
 tape("Env simple", function(test) {
     var env = new desim.Env(); 

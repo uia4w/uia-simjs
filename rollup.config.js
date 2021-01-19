@@ -24,7 +24,7 @@ export default {
         }
     ],
     plugins: [ 
-        builtins(),
-        nodeResolve()
+        nodeResolve(),
+        builtins()
     ]
 };

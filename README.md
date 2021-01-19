@@ -10,7 +10,10 @@ DESim4JS is a JavaScript port of SimPy, __process-based discrete event simulatio
 
 DESim4JS aims to port the concepts used in SimPy to the JavaScript world.
 
+
+## Examples
 A simple example:
+
 ```js
 var env = new desim.Env(); 
 var bell = env.event("bell");
@@ -38,3 +41,14 @@ env.process("School", function *() {
 
 env.run(250);
 ```
+
+## Develop References
+
+[Setting up your test environment with Tape and Codecov in Node.js](https://dev.to/glrta/setting-up-your-test-environment-with-tape-and-codecov-in-node-js-2paj)
+
+[Codecov Bash uploader in CI](https://docs.codecov.io/docs/about-the-codecov-bash-uploader)
+
+[nyc - integrating with codecov.io](https://github.com/istanbuljs/nyc/blob/master/docs/setup-codecov.md)
+
+### Travis CI
+Codecov token environment variable: `CODECOV_TOKEN`.

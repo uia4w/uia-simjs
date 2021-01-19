@@ -30,7 +30,7 @@
         "pretest1": "rollup -c",
         "test1": "tape --",
         "coverage": "nyc npm run test",
-        "codecov": "nyc report --reporter=text-lcov > coverage.lcov",
+        "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov --disable=gcov",
         "eslint": "eslint src"
     },
     "sideEffects": false,

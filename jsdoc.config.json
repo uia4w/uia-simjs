@@ -1,0 +1,23 @@
+{
+    "plugins": [
+        "plugins/markdown",
+        "plugins/summarize"
+    ],
+    "recurseDepth": 10,
+    "source": {
+        "include": ["src/env.js", "src/event.js", "src/interruption.js", "src/process.js", "src/timeout.js"]
+    },
+    "sourceType": "module",
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "templates": {
+        "default": {
+            "outputSourceFiles": false
+        }
+    },
+    "opts": {
+        "encoding": "utf-8",
+        "destination": "./jsdoc"
+    }
+}

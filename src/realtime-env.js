@@ -18,9 +18,29 @@ import Event from "./event";
 function RealtimeEnv(tickSize = 20) {
     Env.apply(this, []);
     this._tickSize = tickSize;
+    this._pause = false;
+    this._pauseGen = undefined;
 } 
 
 RealtimeEnv.prototype = new Env();
+
+RealtimeEnv.prototype.pause = async function(timeout = 0) {
+    this._pause = true;
+    if(timeout > 0) {
+        console.log("pause");
+        await delay(timeout);
+        console.log("resume");
+        this.resume();
+    }
+}
+
+RealtimeEnv.prototype.resume = function() {
+    this._pause = false;
+    if(this._pauseGen) {
+        this._pauseGen.next();
+        this._pauseGen = undefined;
+    }
+}
 
 /**
  * Runs the realtime environment. The method is async.
@@ -44,19 +64,28 @@ RealtimeEnv.prototype.run = async function(until = 0) {
             if(ms > 0) {
                 await delay(ms * this._tickSize);
             }
-            this.step();
+            if(this._pause) {
+                this._pauseGen = function *() {
+                    yield true;
+                    this._pause = false;
+                    this._pauseGen = undefined;
+                    this.step();
+                }();
+            } else {
+                this.step();
+            }
         }
         console.log("=== realtime end ===");
     } catch(err) {
         console.log(err.message);
         console.log("=== realtime end  realtime with exception ===");
     }
+}
 
-    function delay(ms) {
-        return new Promise(function(resolve) {
-            setTimeout(resolve, ms);     
-        });
-    }
+function delay(ms) {
+    return new Promise(function(resolve) {
+        setTimeout(resolve, ms);     
+    });
 }
 
 export default RealtimeEnv;

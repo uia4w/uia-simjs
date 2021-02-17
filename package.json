@@ -28,7 +28,7 @@
         "pretest": "rollup -c",
         "test": "tape test/**/*-test.js | tap-spec",
         "pretest1": "rollup -c",
-        "test1": "tape --",
+        "test1": "tape",
         "coverage": "nyc npm run test",
         "codecov": "codecov --disable=gcov",
         "eslint": "eslint src"

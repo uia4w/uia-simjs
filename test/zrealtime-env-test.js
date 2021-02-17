@@ -27,6 +27,7 @@ tape("RealtimeEnv school", function(test) {
     });
 
     env.run(250);
+    env.pause(2000);
     
     test.end();
 });

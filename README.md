@@ -48,7 +48,9 @@ env.run(250);
 
 [Codecov Bash uploader in CI](https://docs.codecov.io/docs/about-the-codecov-bash-uploader)
 
-[nyc - integrating with codecov.io](https://github.com/istanbuljs/nyc/blob/master/docs/setup-codecov.md)
+[Integrating nyc with codecov.io](https://github.com/istanbuljs/nyc/blob/master/docs/setup-codecov.md)
+
+[Testing your Node.js application with tape](https://dimitr.im/testing-nodejs-tape)
 
 ### Travis CI
 Codecov token environment variable: `CODECOV_TOKEN`.

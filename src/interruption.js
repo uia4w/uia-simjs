@@ -20,15 +20,11 @@
  */
 function Interruption(process, cause) {
     Event.apply(this, [ process.env(), "Interruption" ]);
-    let _process = process;
-
     this._value = cause;
     this.ng();
     this.defused();
-    this.addCallback(function() {
-        _process.unbind(_process._target);
-        _process.resume(this);
-    });
+    process.unbind(process._target);
+    process.bind(this);
     process.env().schedule(this);
 }
 

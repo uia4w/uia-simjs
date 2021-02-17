@@ -40,6 +40,15 @@ Event.prototype.isOk = function() {
 }
 
 /**
+ * Tests if the event has callbacks.
+ * 
+ * @returns True if the event has callbacks.
+ */
+Event.prototype.hasCallbacks = function() {
+    return this._callbacks !== undefined && this._callbacks.length > 0;
+}
+
+/**
  * Tests is the event is triggered and __schedule__ in the queue.
  * 
  * @returns True is the event is triggered.
